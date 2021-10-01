@@ -50,7 +50,7 @@ public class John implements Actor {
         int pair = hand.getCard(0).getRank() == hand.getCard(1).getRank()
                 ? hand.getCard(0).getRank()
                 : 0;
-        if(hands < 4 && pair != 0){
+        if(hand.size() == 2 && hands < 4 && pair != 0){
             boolean split = switch(pair){
                 case 1, 8 -> true;
                 case 9 -> !(dealerUpCardRank == 7 || dealerUpCardRank == 10 || dealerUpCardRank == 1);
@@ -66,13 +66,12 @@ public class John implements Actor {
         }
 
         // both can't be aces because they would have been split
-        // Soft Totals (Single Ace)
-        if(hand.getCard(0).getRank() == 1 || hand.getCard(1).getRank() == 1){
+        // Soft Totals (Single Starting Ace)
+        if(hand.size() == 2 && (hand.getCard(0).getRank() == 1 || hand.getCard(1).getRank() == 1)){
             int softNum = hand.getCard(0).getRank() == 1
                     ? hand.getCard(1).getRank()
                     : hand.getCard(0).getRank();
             return switch(softNum){
-                case 9, 10, 11, 12, 13 -> Actor.STAND;
                 case 8 -> dealerUpCardRank == 6 ? Actor.DOUBLE : Actor.STAND;
                 case 7 -> {
                     if(dealerUpCardRank >= 2 && dealerUpCardRank <= 6)
@@ -84,11 +83,12 @@ public class John implements Actor {
                 }
                 case 6 -> dealerUpCardRank >= 3 && dealerUpCardRank <= 6 ? Actor.DOUBLE : Actor.HIT;
                 case 4, 5 -> dealerUpCardRank >= 4 && dealerUpCardRank <= 6 ? Actor.DOUBLE : Actor.HIT;
-                default -> dealerUpCardRank == 5 || dealerUpCardRank == 6 ? Actor.DOUBLE : Actor.HIT; // 2 or 3
+                case 2, 3 -> dealerUpCardRank == 5 || dealerUpCardRank == 6 ? Actor.DOUBLE : Actor.HIT;
+                default -> Actor.STAND; // 9+
             };
         }
 
-        // Hard Totals (No Ace)
+        // Hard Totals (No Starting Ace)
         return switch(hand.getValue()){
             case 17, 18, 19, 20, 21 -> Actor.STAND;
             case 13, 14, 15, 16 -> dealerUpCardRank >= 2 && dealerUpCardRank <= 6 ? Actor.STAND : Actor.HIT;
@@ -96,7 +96,7 @@ public class John implements Actor {
             case 11 -> Actor.DOUBLE;
             case 10 -> dealerUpCardRank >= 2 && dealerUpCardRank <= 9 ? Actor.DOUBLE : Actor.HIT;
             case 9 -> dealerUpCardRank >= 3 && dealerUpCardRank <= 6 ? Actor.DOUBLE : Actor.HIT;
-            default -> Actor.HIT;
+            default -> Actor.HIT; // 1 - 8
         };
     }
 

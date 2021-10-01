@@ -1,11 +1,10 @@
 package com.company.cardGame.blackJack;
 
 import com.company.Utils.Console;
+import com.company.cardGame.actor.Jack;
 import com.company.cardGame.actor.Dealer;
-import com.company.cardGame.actor.John;
 import com.company.cardGame.actor.Player;
 import com.company.cardGame.deck.Deck;
-import com.company.cardGame.deck.RiggedDeck;
 import com.company.cardGame.deck.StandardDeck;
 
 import java.util.ArrayList;
@@ -20,9 +19,9 @@ public class Table {
     private static final int BUST_VALUE = 21;
 
     public Table(){
-        Actor john = new John();
-        players.add(john);
-        hands.add(new Hand(john));
+        Actor actor = new Jack();
+        players.add(actor);
+        hands.add(new Hand(actor));
     }
 
     private void gatherPlayers(){

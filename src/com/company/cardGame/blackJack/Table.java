@@ -2,6 +2,7 @@ package com.company.cardGame.blackJack;
 
 import com.company.Utils.Console;
 import com.company.cardGame.actor.Dealer;
+import com.company.cardGame.actor.John;
 import com.company.cardGame.actor.Player;
 import com.company.cardGame.deck.Deck;
 import com.company.cardGame.deck.RiggedDeck;
@@ -17,6 +18,12 @@ public class Table {
     private final Hand dealer = new Hand(new Dealer());
     private Deck deck;
     private static final int BUST_VALUE = 21;
+
+    public Table(){
+        Actor john = new John();
+        players.add(john);
+        hands.add(new Hand(john));
+    }
 
     private void gatherPlayers(){
         do{
@@ -78,7 +85,7 @@ public class Table {
     }
 
     public void setup(){
-        deck = new RiggedDeck();
+        deck = new StandardDeck();
         deck.shuffle();
 
         for(Hand hand : hands)
@@ -150,7 +157,7 @@ public class Table {
         System.out.println("value: " + dealer.getValue());
 
         System.out.printf("%s's turn\n", activeHand.getName());
-        byte action = activeHand.getAction();
+        byte action = activeHand.getAction(dealer);
         return switch (action) {
             case Actor.QUIT -> {
                 System.out.println("Surrender ;(");

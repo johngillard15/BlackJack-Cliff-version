@@ -2,10 +2,12 @@ package com.company.cardGame.actor;
 
 import com.company.cardGame.blackJack.Actor;
 import com.company.cardGame.blackJack.Hand;
+import com.company.cardGame.deck.Card;
 
 public class John implements Actor {
     public final String name = "\uD83D\uDCFB♪♬ ᕕ(⌐■_■)ᕗ";
-    int balance = 69_000_000;
+    int balance = 6_900;
+    int hands = 1;
 
     @Override
     public String getName() {
@@ -19,16 +21,87 @@ public class John implements Actor {
 
     @Override
     public int placeBet() {
-        return 0;
+        return 69;
     }
 
     @Override
-    public byte getAction(Hand hand) {
-        return 0;
+    public byte getAction(Hand hand, Hand dealer){
+        System.out.printf("%s\n%s\nvalue: %d\n", name, hand.displayHand(), hand.getValue());
+
+        // Victory Royale (⌐▨◡▨)
+        if(dealer.getValue() == 21){
+            dealer.addCard(new Card(-69, " ໒( 0◡0)っ✂╰⋃╯"));
+            dealer.addCard(new Card(117, " (ノಠ益ಠ)ノ彡┻━┻"));
+            return Actor.STAND;
+        }
+        if(dealer.getValue() == 20){
+            dealer.addCard(new Card(2, " ಠ_ಠ"));
+            return Actor.STAND;
+        }
+
+        // Five Card Charlie
+        if(hand.size() == 5 && !(hand.getValue() <= 21))
+            return Actor.STAND;
+
+        // I can already see both dealer cards but whatever
+        int dealerUpCardRank = dealer.getCard(0).getRank();
+
+        // Pair Splitting
+        int pair = hand.getCard(0).getRank() == hand.getCard(1).getRank()
+                ? hand.getCard(0).getRank()
+                : 0;
+        if(hands < 4 && pair != 0){
+            boolean split = switch(pair){
+                case 1, 8 -> true;
+                case 9 -> !(dealerUpCardRank == 7 || dealerUpCardRank == 10 || dealerUpCardRank == 1);
+                case 2, 3, 7 -> dealerUpCardRank >= 2 && dealerUpCardRank <= 7;
+                case 6 -> dealerUpCardRank >= 2 && dealerUpCardRank <= 6;
+                case 4 -> dealerUpCardRank == 5 || dealerUpCardRank == 6;
+                default -> false; // 5, 10+
+            };
+            if(split){
+                ++hands;
+                return Actor.SPLIT;
+            }
+        }
+
+        // both can't be aces because they would have been split
+        // Soft Totals (Single Ace)
+        if(hand.getCard(0).getRank() == 1 || hand.getCard(1).getRank() == 1){
+            int softNum = hand.getCard(0).getRank() == 1
+                    ? hand.getCard(1).getRank()
+                    : hand.getCard(0).getRank();
+            return switch(softNum){
+                case 9, 10, 11, 12, 13 -> Actor.STAND;
+                case 8 -> dealerUpCardRank == 6 ? Actor.DOUBLE : Actor.STAND;
+                case 7 -> {
+                    if(dealerUpCardRank >= 2 && dealerUpCardRank <= 6)
+                        yield Actor.DOUBLE;
+                    else if(dealerUpCardRank == 7 || dealerUpCardRank == 8)
+                        yield Actor.STAND;
+                    else
+                        yield Actor.HIT;
+                }
+                case 6 -> dealerUpCardRank >= 3 && dealerUpCardRank <= 6 ? Actor.DOUBLE : Actor.HIT;
+                case 4, 5 -> dealerUpCardRank >= 4 && dealerUpCardRank <= 6 ? Actor.DOUBLE : Actor.HIT;
+                default -> dealerUpCardRank == 5 || dealerUpCardRank == 6 ? Actor.DOUBLE : Actor.HIT; // 2 or 3
+            };
+        }
+
+        // Hard Totals (No Ace)
+        return switch(hand.getValue()){
+            case 17, 18, 19, 20, 21 -> Actor.STAND;
+            case 13, 14, 15, 16 -> dealerUpCardRank >= 2 && dealerUpCardRank <= 6 ? Actor.STAND : Actor.HIT;
+            case 12 -> dealerUpCardRank >= 4 && dealerUpCardRank <= 6 ? Actor.STAND : Actor.HIT;
+            case 11 -> Actor.DOUBLE;
+            case 10 -> dealerUpCardRank >= 2 && dealerUpCardRank <= 9 ? Actor.DOUBLE : Actor.HIT;
+            case 9 -> dealerUpCardRank >= 3 && dealerUpCardRank <= 6 ? Actor.DOUBLE : Actor.HIT;
+            default -> Actor.HIT;
+        };
     }
 
     @Override
-    public void addBalance(int amt) {
+    public void addBalance(int amt){
         balance += amt;
     }
 }

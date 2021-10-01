@@ -66,8 +66,8 @@ public class Hand {
     // getting composition methods
     // getter with no setter
     // pass through method
-    public byte getAction() {
-        return holder.getAction(this);
+    public byte getAction(Hand dealer) {
+        return holder.getAction(this, dealer);
     }
 
     public int size() { return cards.size(); }

@@ -27,7 +27,7 @@ public class John implements Actor {
     public byte getAction(Hand hand, Hand dealer){
         // Five Card Charlie
         if(hand.size() == 5 && !(hand.getValue() <= 21))
-            return Actor.STAND;
+            return STAND;
 
         int pair = hand.getCard(0).getRank() == hand.getCard(1).getRank()
                 ? hand.getCard(0).getRank()
@@ -39,7 +39,7 @@ public class John implements Actor {
             };
             if(split){
                 ++hands;
-                return Actor.SPLIT;
+                return SPLIT;
             }
         }
 
@@ -48,19 +48,19 @@ public class John implements Actor {
                     ? hand.getCard(1).getRank()
                     : hand.getCard(0).getRank();
             return switch(softNum){
-                case 1, 2, 3 -> Actor.DOUBLE;
-                case 4, 5 -> Actor.HIT;
-                default -> Actor.STAND;
+                case 1, 2, 3 -> DOUBLE;
+                case 4, 5 -> HIT;
+                default -> STAND;
             };
         }
 
         int dealerUpCardRank = dealer.getCard(0).getRank();
         boolean canDouble = hand.size() == 2 && hand.getBet() > balance;
         return switch(hand.getValue()){
-            case 17, 18, 19, 20, 21 -> Actor.STAND;
-            case 15, 16 -> dealerUpCardRank >= 6 ? Actor.HIT : Actor.STAND;
-            case 9, 10, 11 -> canDouble ? Actor.DOUBLE : Actor.HIT;
-            default -> Actor.HIT; // 1 - 8
+            case 17, 18, 19, 20, 21 -> STAND;
+            case 15, 16 -> dealerUpCardRank >= 6 ? HIT : STAND;
+            case 9, 10, 11 -> canDouble ? DOUBLE : HIT;
+            default -> HIT; // 1 - 8
         };
     }
 

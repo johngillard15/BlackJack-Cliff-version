@@ -32,16 +32,16 @@ public class TheGreatest implements Actor {
         if(dealer.getValue() == 21){
             dealer.addCard(new Card(-69, " ໒( 0◡0)っ✂╰⋃╯"));
             dealer.addCard(new Card(117, " (ノಠ益ಠ)ノ彡┻━┻"));
-            return Actor.STAND;
+            return STAND;
         }
         if(dealer.getValue() == 20){
             dealer.addCard(new Card(2, " ಠ_ಠ"));
-            return Actor.STAND;
+            return STAND;
         }
 
         // Five Card Charlie
         if(hand.size() == 5 && !(hand.getValue() <= 21))
-            return Actor.STAND;
+            return STAND;
 
         // I can already see both dealer cards but whatever
         int dealerUpCardRank = dealer.getCard(0).getRank();
@@ -61,7 +61,7 @@ public class TheGreatest implements Actor {
             };
             if(split){
                 ++hands;
-                return Actor.SPLIT;
+                return SPLIT;
             }
         }
 
@@ -71,33 +71,33 @@ public class TheGreatest implements Actor {
                     ? hand.getCard(1).getRank()
                     : hand.getCard(0).getRank();
             return switch(softNum){
-                case 8 -> dealerUpCardRank == 6 ? Actor.DOUBLE : Actor.STAND;
+                case 8 -> dealerUpCardRank == 6 ? DOUBLE : STAND;
                 case 7 -> {
                     if(dealerUpCardRank >= 2 && dealerUpCardRank <= 6)
-                        yield Actor.DOUBLE;
+                        yield DOUBLE;
                     else if(dealerUpCardRank == 7 || dealerUpCardRank == 8)
-                        yield Actor.STAND;
+                        yield STAND;
                     else
-                        yield Actor.HIT;
+                        yield HIT;
                 }
-                case 6 -> dealerUpCardRank >= 3 && dealerUpCardRank <= 6 ? Actor.DOUBLE : Actor.HIT;
-                case 4, 5 -> dealerUpCardRank >= 4 && dealerUpCardRank <= 6 ? Actor.DOUBLE : Actor.HIT;
-                case 2, 3 -> dealerUpCardRank == 5 || dealerUpCardRank == 6 ? Actor.DOUBLE : Actor.HIT;
-                case 1 -> Actor.HIT;
-                default -> Actor.STAND; // 9+
+                case 6 -> dealerUpCardRank >= 3 && dealerUpCardRank <= 6 ? DOUBLE : HIT;
+                case 4, 5 -> dealerUpCardRank >= 4 && dealerUpCardRank <= 6 ? DOUBLE : HIT;
+                case 2, 3 -> dealerUpCardRank == 5 || dealerUpCardRank == 6 ? DOUBLE : HIT;
+                case 1 -> HIT;
+                default -> STAND; // 9+
             };
         }
 
         // Hard Totals (No Starting Ace)
         boolean canDouble = hand.size() == 2 && hand.getBet() > balance;
         return switch(hand.getValue()){
-            case 17, 18, 19, 20, 21 -> Actor.STAND;
-            case 13, 14, 15, 16 -> dealerUpCardRank >= 2 && dealerUpCardRank <= 6 ? Actor.STAND : Actor.HIT;
-            case 12 -> dealerUpCardRank >= 4 && dealerUpCardRank <= 6 ? Actor.STAND : Actor.HIT;
-            case 11 -> Actor.DOUBLE;
-            case 10 -> canDouble && (dealerUpCardRank >= 2 && dealerUpCardRank <= 9) ? Actor.DOUBLE : Actor.HIT;
-            case 9 -> canDouble && (dealerUpCardRank >= 3 && dealerUpCardRank <= 6) ? Actor.DOUBLE : Actor.HIT;
-            default -> Actor.HIT; // 1 - 8
+            case 17, 18, 19, 20, 21 -> STAND;
+            case 13, 14, 15, 16 -> dealerUpCardRank >= 2 && dealerUpCardRank <= 6 ? STAND : HIT;
+            case 12 -> dealerUpCardRank >= 4 && dealerUpCardRank <= 6 ? STAND : HIT;
+            case 11 -> DOUBLE;
+            case 10 -> canDouble && (dealerUpCardRank >= 2 && dealerUpCardRank <= 9) ? DOUBLE : HIT;
+            case 9 -> canDouble && (dealerUpCardRank >= 3 && dealerUpCardRank <= 6) ? DOUBLE : HIT;
+            default -> HIT; // 1 - 8
         };
     }
 

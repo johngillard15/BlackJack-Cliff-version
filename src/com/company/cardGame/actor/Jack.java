@@ -31,7 +31,7 @@ public class Jack implements Actor {
 
         for(int i = 0; i < 21; i++)
             hand.addCard(new Card(1, SUITS[i % 4]));
-        return Actor.STAND;
+        return STAND;
     }
 
     @Override

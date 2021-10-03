@@ -12,6 +12,7 @@ public class Hand {
 
     public static final byte PUSHPAY = 0;
     public static final byte NORMALPAY = 1;
+    public static final byte BLACKJACKPAY = 2;
 
     public Hand(Actor holder) {
         this.holder = holder;
@@ -109,6 +110,7 @@ public class Hand {
         switch (type) {
             case PUSHPAY -> holder.addBalance(bet);
             case NORMALPAY -> holder.addBalance(bet * 2);
+            case BLACKJACKPAY -> holder.addBalance((int)(bet * 2.5));
         }
     }
 

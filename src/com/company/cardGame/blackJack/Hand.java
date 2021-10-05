@@ -22,14 +22,6 @@ public class Hand {
         cards.add(card);
     }
 
-    public Card getCard(int index){
-        return cards.get(index);
-    }
-
-    public Card removeCard(int index){
-        return cards.remove(index);
-    }
-
     public String displayHand() {
         StringBuilder output = new StringBuilder();
         for (Card card : cards) {
@@ -96,29 +88,32 @@ public class Hand {
         bet *= 2;
     }
 
-    public Hand splitHand(){
-        Hand hand = new Hand(holder);
-
-        hand.addCard(cards.remove(1));
-        hand.bet = bet;
-        holder.addBalance(-bet);
-
-        return hand;
-    }
-
     public void payout(byte type) {
         switch (type) {
             case PUSHPAY -> holder.addBalance(bet);
             case NORMALPAY -> holder.addBalance(bet * 2);
-            case BLACKJACKPAY -> holder.addBalance((int)(bet * 2.5));
+            // TODO: add logic to game to trigger this payout when applicable
+            case BLACKJACKPAY -> holder.addBalance(bet * 2.5);
         }
     }
 
-    protected Actor getHolder(){
-        return holder;
+    // removeCard method
+    public Card removeCard(int index) {
+        // take card at index out of hand and return to table.
+        return cards.remove(index);
     }
 
-    protected void clear(){
-        cards.clear();
+    public Card getCard(int index){
+        return cards.get(index);
     }
+
+    public Hand splitHand() {
+        // double bet
+        bet = bet / 2;
+        Hand hand = new Hand(holder);
+        hand.addCard(cards.remove(1));
+        hand.bet = bet;
+        return hand;
+    }
+
 }

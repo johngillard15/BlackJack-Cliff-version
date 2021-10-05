@@ -11,6 +11,6 @@ public interface Actor {
     int getBalance();
     int placeBet();
     byte getAction(Hand hand, Hand dealer);
-    void addBalance(int amt);
+    void addBalance(double amt);
     //byte getAcion(Hand hand, List<Cards> cards) -> card counter version
 }

@@ -6,7 +6,7 @@ import com.company.cardGame.deck.Card;
 
 public class TheGreatest implements Actor {
     public final String name = "\uD83D\uDCFB♪♬ ᕕ(⌐■_■)ᕗ";
-    int balance = 6_900;
+    int balance = 10_000;
     int hands = 1;
 
     @Override
@@ -21,7 +21,7 @@ public class TheGreatest implements Actor {
 
     @Override
     public int placeBet() {
-        return 69;
+        return balance / 20;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class TheGreatest implements Actor {
         }
 
         // Five Card Charlie
-        if(hand.size() == 5 && !(hand.getValue() <= 21))
+        if(hand.size() == 5 && hand.getValue() <= 21)
             return STAND;
 
         // I can already see both dealer cards but whatever
@@ -102,7 +102,7 @@ public class TheGreatest implements Actor {
     }
 
     @Override
-    public void addBalance(int amt){
+    public void addBalance(double amt){
         balance += amt;
     }
 }

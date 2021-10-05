@@ -62,7 +62,7 @@ public class Player implements Actor {
         return (byte) Console.getInt(getAvailableActions(hand), 0, actionsCount, "invalid action");
     }
 
-    public void addBalance(int amt) {
+    public void addBalance(double amt) {
         balance += amt;
     }
 

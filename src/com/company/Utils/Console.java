@@ -5,11 +5,6 @@ import java.util.Scanner;
 public class Console {
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static void pause(){
-        System.out.println("Press enter to continue...");
-        scanner.nextLine();
-    }
-
     public static int getInt(String prompt, int min, int max, String errorMsg) {
         int option = min - 1;
         do {

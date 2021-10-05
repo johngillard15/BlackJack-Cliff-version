@@ -2,6 +2,7 @@ package com.company.cardGame.actor;
 
 import com.company.cardGame.blackJack.Actor;
 import com.company.cardGame.blackJack.Hand;
+import com.company.cardGame.deck.Card;
 
 public class John implements Actor {
     public final String name = "xXx_john_xXx";
@@ -25,10 +26,13 @@ public class John implements Actor {
 
     @Override
     public byte getAction(Hand hand, Hand dealer){
+        System.out.printf("%s\n%s\nvalue: %d\n", name, hand.displayHand(), hand.getValue());
+
         // Five Card Charlie
-        if(hand.size() == 5 && !(hand.getValue() <= 21))
+        if(hand.size() == 5 && hand.getValue() <= 21)
             return STAND;
 
+        // Pair Splitting
         int pair = hand.getCard(0).getRank() == hand.getCard(1).getRank()
                 ? hand.getCard(0).getRank()
                 : 0;
@@ -43,6 +47,7 @@ public class John implements Actor {
             }
         }
 
+        // Soft Totals (Single Starting Ace)
         if(hand.size() == 2 && (hand.getCard(0).getRank() == 1 || hand.getCard(1).getRank() == 1)){
             int softNum = hand.getCard(0).getRank() == 1
                     ? hand.getCard(1).getRank()
@@ -54,6 +59,7 @@ public class John implements Actor {
             };
         }
 
+        // Hard Totals (No Starting Ace)
         int dealerUpCardRank = dealer.getCard(0).getRank();
         boolean canDouble = hand.size() == 2 && hand.getBet() > balance;
         return switch(hand.getValue()){
@@ -65,7 +71,7 @@ public class John implements Actor {
     }
 
     @Override
-    public void addBalance(int amt) {
+    public void addBalance(double amt) {
         balance += amt;
     }
 }

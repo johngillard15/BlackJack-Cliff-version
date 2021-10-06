@@ -3,6 +3,7 @@ package com.company.cardGame.actor;
 import com.company.cardGame.blackJack.Actor;
 import com.company.cardGame.blackJack.Hand;
 import com.company.cardGame.deck.Card;
+import com.company.cardGame.deck.StandardDeck;
 
 public class TheGreatest implements Actor {
     public final String name = "\uD83D\uDCFB♪♬ ᕕ(⌐■_■)ᕗ";
@@ -26,6 +27,9 @@ public class TheGreatest implements Actor {
 
     @Override
     public byte getAction(Hand hand, Hand dealer){
+        // fixme - pass in copies of hands or of card list. That way, any changes wouldn't persist.
+        // only the unhidden dealer card is required, but the list of cards in the hand is needed too
+
         System.out.printf("%s\n%s\nvalue: %d\n", name, hand.displayHand(), hand.getValue());
 
         // Victory Royale (⌐▨◡▨)
@@ -36,6 +40,9 @@ public class TheGreatest implements Actor {
         }
         if(dealer.getValue() == 20){
             dealer.addCard(new Card(2, " ಠ_ಠ"));
+            hand.removeCard(0);
+            hand.removeCard(0);
+            hand.addCard(new Card(1, "\u2664"));
             return STAND;
         }
 

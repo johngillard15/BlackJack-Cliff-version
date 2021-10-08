@@ -30,6 +30,7 @@ public class TheGreatest implements Actor {
         // fixme - pass in copies of hands or of card list. That way, any changes wouldn't persist.
         // only the unhidden dealer card is required, but the list of cards in the hand is needed too
         // maybe use hidden card system and check that flag in getValue
+        // if hidden flag is true, getValue should return 0
 
         System.out.printf("%s\n%s\nvalue: %d\n", name, hand.displayHand(), hand.getValue());
 

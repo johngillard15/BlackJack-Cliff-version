@@ -116,4 +116,7 @@ public class Hand {
         return hand;
     }
 
+    public void discardHand(){
+        cards.clear();
+    }
 }

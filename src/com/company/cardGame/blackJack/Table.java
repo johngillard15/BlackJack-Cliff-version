@@ -26,6 +26,7 @@ public class Table {
         playerCount = Console.getInt("How many players?", 1, 6, "invalid player selection");
         for (int count = 0; count < playerCount; count++) {
             Player newPlayer = new Player("Player " + (count + 1));
+//            Actor newPlayer = new AnotherOne();
             hands.add(new Hand(newPlayer));
         }
     }
@@ -73,7 +74,9 @@ public class Table {
         for (Hand player : hands) {
             determineWinner(player);
             System.out.println(player.getBalance());
+            player.discardHand();
         }
+        dealer.discardHand();
         while ( hands.size() > playerCount) {
             hands.remove(hands.size() - 1);
         }

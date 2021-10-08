@@ -5,7 +5,7 @@ import com.company.cardGame.blackJack.Hand;
 import com.company.cardGame.deck.Card;
 
 public class John implements Actor {
-    public final String name = "xXx_john_xXx";
+    public final String name = "John";
     int balance = 1_001;
     int hands = 1;
 
@@ -26,25 +26,21 @@ public class John implements Actor {
 
     @Override
     public byte getAction(Hand hand, Hand dealer){
-        System.out.printf("%s\n%s\nvalue: %d\n", name, hand.displayHand(), hand.getValue());
+        System.out.printf("%s\nvalue: %d\n", hand.displayHand(), hand.getValue());
 
         // Five Card Charlie
         if(hand.size() == 5 && hand.getValue() <= 21)
             return STAND;
 
         // Pair Splitting
-        int pair = hand.getCard(0).getRank() == hand.getCard(1).getRank()
-                ? hand.getCard(0).getRank()
-                : 0;
-        if(hand.size() == 2 && hands < 4 && pair != 0){
+        int pair = hand.canSplit() ? hand.getCard(0).getRank() : 0;
+        if(hand.size() == 2 && ++hands <= 4 && pair != 0){
             boolean split = switch(pair){
                 case 10, 11, 12, 13 -> false;
                 default -> true;
             };
-            if(split){
-                ++hands;
+            if(split)
                 return SPLIT;
-            }
         }
 
         // Soft Totals (Single Starting Ace)

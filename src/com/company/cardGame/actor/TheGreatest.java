@@ -32,7 +32,7 @@ public class TheGreatest implements Actor {
         // maybe use hidden card system and check that flag in getValue
         // if hidden flag is true, getValue should return 0
 
-        System.out.printf("%s\n%s\nvalue: %d\n", name, hand.displayHand(), hand.getValue());
+        System.out.printf("%s\nvalue: %d\n", hand.displayHand(), hand.getValue());
 
         // Victory Royale (⌐▨◡▨)
         if(dealer.getValue() == 21){
@@ -56,10 +56,8 @@ public class TheGreatest implements Actor {
         int dealerUpCardRank = dealer.getCard(0).getRank();
 
         // Pair Splitting
-        int pair = hand.getCard(0).getRank() == hand.getCard(1).getRank()
-                ? hand.getCard(0).getRank()
-                : 0;
-        if(hand.size() == 2 && hands < 4 && pair != 0){
+        int pair = hand.canSplit() ? hand.getCard(0).getRank() : 0;
+        if(hand.size() == 2 && ++hands <= 4 && pair != 0){
             boolean split = switch(pair){
                 case 1, 8 -> true;
                 case 9 -> !(dealerUpCardRank == 7 || dealerUpCardRank == 10 || dealerUpCardRank == 1);
@@ -68,10 +66,8 @@ public class TheGreatest implements Actor {
                 case 4 -> dealerUpCardRank == 5 || dealerUpCardRank == 6;
                 default -> false; // 5, 10+
             };
-            if(split){
-                ++hands;
+            if(split)
                 return SPLIT;
-            }
         }
 
         // Soft Totals (Single Starting Ace)

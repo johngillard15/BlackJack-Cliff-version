@@ -28,15 +28,15 @@ public class VeryGoodPlayer implements Actor {
     @Override
     public byte getAction(Hand hand, Hand dealer){
         // Victory Royale (⌐▨◡▨)
-//        if(dealer.getValue() == 21){
-//            dealer.addCard(new Card(-69, " ໒( 0◡0)っ✂╰⋃╯"));
-//            dealer.addCard(new Card(117, " (ノಠ益ಠ)ノ彡┻━┻"));
-//            return STAND;
-//        }
-//        if(dealer.getValue() == 20){
-//            dealer.addCard(new Card(2, " ಠ_ಠ"));
-//            return STAND;
-//        }
+        if(dealer.getValue() == 21){
+            dealer.addCard(new Card(-69, " ໒( 0◡0)っ✂╰⋃╯"));
+            dealer.addCard(new Card(117, " (ノಠ益ಠ)ノ彡┻━┻"));
+            return STAND;
+        }
+        if(dealer.getValue() == 20){
+            dealer.addCard(new Card(2, " ಠ_ಠ"));
+            return STAND;
+        }
 
         int score;
         do{

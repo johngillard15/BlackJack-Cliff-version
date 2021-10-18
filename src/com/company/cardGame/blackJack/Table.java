@@ -3,6 +3,7 @@ package com.company.cardGame.blackJack;
 import com.company.Utils.Console;
 import com.company.cardGame.actor.Dealer;
 import com.company.cardGame.actor.Player;
+import com.company.cardGame.actor.VeryGoodPlayer;
 import com.company.cardGame.deck.Deck;
 import com.company.cardGame.deck.RiggedDeck;
 import com.company.cardGame.deck.StandardDeck;
@@ -25,8 +26,8 @@ public class Table {
     public Table() {
         playerCount = Console.getInt("How many players?", 1, 6, "invalid player selection");
         for (int count = 0; count < playerCount; count++) {
-            Player newPlayer = new Player("Player " + (count + 1));
-//            Actor newPlayer = new AnotherOne();
+//            Player newPlayer = new Player("Player " + (count + 1));
+            Actor newPlayer = new VeryGoodPlayer();
             hands.add(new Hand(newPlayer));
         }
     }

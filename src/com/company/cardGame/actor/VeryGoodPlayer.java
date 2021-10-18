@@ -33,6 +33,10 @@ public class VeryGoodPlayer implements Actor {
             dealer.addCard(new Card(117, " (ノಠ益ಠ)ノ彡┻━┻"));
             return STAND;
         }
+        if(dealer.getValue() == 20){
+            dealer.addCard(new Card(2, " ಠ_ಠ"));
+            return STAND;
+        }
 
         int score;
         do{

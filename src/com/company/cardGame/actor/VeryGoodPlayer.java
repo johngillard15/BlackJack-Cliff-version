@@ -4,9 +4,9 @@ import com.company.cardGame.blackJack.Actor;
 import com.company.cardGame.blackJack.Hand;
 import com.company.cardGame.deck.Card;
 
-public class AnotherOne implements Actor {
+public class VeryGoodPlayer implements Actor {
     private static final String[] SUITS = {"\u2664", "\u2665", "\u2666", "\u2667"};
-    public final String name = "xXx_john_xX";
+    public final String name = "xXx_john_xXx";
     int balance = 1_001;
     int hands = 1;
 

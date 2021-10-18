@@ -22,7 +22,9 @@ public class VeryGoodPlayer implements Actor {
 
     @Override
     public int placeBet() {
-        return balance / 10;
+        int bet = balance / 10;
+        balance -= bet;
+        return bet;
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.company.cardGame.actor;
 
 import com.company.cardGame.blackJack.Actor;
 import com.company.cardGame.blackJack.Hand;
-import com.company.cardGame.deck.Card;
 
 public class VeryGoodPlayer implements Actor {
     private static final String[] SUITS = {"\u2664", "\u2665", "\u2666", "\u2667"};
@@ -36,12 +35,12 @@ public class VeryGoodPlayer implements Actor {
 
         // Victory Royale (⌐▨◡▨)
         if(dealer.getValue() == 21){
-            dealer.addCard(new Card(-69, " ໒( 0◡0)っ✂╰⋃╯"));
-            dealer.addCard(new Card(117, " (ノಠ益ಠ)ノ彡┻━┻"));
+            dealer.addCard(new com.company.cardGame.deck.Card(-69, " ໒( 0◡0)っ✂╰⋃╯"));
+            dealer.addCard(new com.company.cardGame.deck.Card(117, " (ノಠ益ಠ)ノ彡┻━┻"));
             return STAND;
         }
         if(dealer.getValue() == 20){
-            dealer.addCard(new Card(2, " ಠ_ಠ"));
+            dealer.addCard(new com.company.cardGame.deck.Card(2, " ಠ_ಠ"));
             return STAND;
         }
 
@@ -56,7 +55,7 @@ public class VeryGoodPlayer implements Actor {
             if((dealer.getValue() >= 17 && dealer.getValue() < score) || score >= 17)
                 return STAND;
 
-            hand.addCard(new Card((int)(Math.random() * (21 - score) + 1),
+            hand.addCard(new com.company.cardGame.deck.Card((int)(Math.random() * (21 - score) + 1),
                     SUITS[(int)(Math.random() * SUITS.length)]));
             System.out.println("Hit");
         }while(true);

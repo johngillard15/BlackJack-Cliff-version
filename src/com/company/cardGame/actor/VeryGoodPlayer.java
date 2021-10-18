@@ -42,12 +42,7 @@ public class VeryGoodPlayer implements Actor {
         do{
             score = hand.getValue();
 
-            if(hand.size() > 2 || hands > 1){
-                System.out.println(dealer.getName() + " " + dealer.displayHand());
-                System.out.println(name);
-            }
-            System.out.println(hand.displayHand());
-            System.out.println(score);
+            System.out.println(name + " " + hand.displayHand());
 
             if(hand.canSplit() && ++hands <= 4)
                 return SPLIT;
